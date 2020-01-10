@@ -1,0 +1,14 @@
+[Unit]
+Description=Kafka
+Requires=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+Environment=LOG_DIR=/var/log/kafka
+Environment=KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"
+Restart=on-failure
+ExecStart=/opt/kafka/bin/kafka-server-start.sh /etc/kafka/server.properties
+ExecStop=/opt/kafka/bin/kafka-server-stop.sh

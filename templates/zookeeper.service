@@ -1,0 +1,17 @@
+[Unit]
+Description=Zookeeper Daemon
+Documentation=https://zookeeper.apache.org
+Requires=network.target
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+Environment=LOG_DIR=/var/log/kafka
+Environment=KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"
+WorkingDirectory=/var/lib/zookeeper
+TimeoutSec=30
+Restart=on-failure
+ExecStart=/opt/kafka/bin/zookeeper-server-start.sh /etc/zookeeper.properties

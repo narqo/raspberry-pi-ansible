@@ -6,3 +6,5 @@ pi-2.local
 pi-3.local
 pi-4.local
 
+[kafka-nodes:children]
+workers

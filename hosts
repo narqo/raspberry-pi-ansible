@@ -1,0 +1,8 @@
+[masters]
+pi-1.local
+
+[workers]
+pi-2.local
+pi-3.local
+pi-4.local
+

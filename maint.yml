@@ -1,0 +1,6 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Update packages
+      apt: upgrade=yes update_cache=yes force_apt_get=yes
+

@@ -1,0 +1,59 @@
+---
+
+- name: Install java
+  apt: name=default-jdk state=present
+
+- name: Check if kafka installed
+  stat: path=/opt/kafka
+  register: kafkadir
+
+- name: Install kafka
+  when: kafkadir.stat.exists == false
+  block:
+    - name: Ensure {{kafka_home}}
+      file: path={{kafka_home}} state=directory
+
+    - name: Download kafka
+      become: false
+      get_url:
+        url: '{{kafka_src_url}}'
+        checksum: '{{kafka_src_sha512}}'
+        dest: /tmp
+
+    - name: Install kafka
+      unarchive:
+        src: '/tmp/{{kafka_version}}.tgz'
+        dest: '{{kafka_home}}'
+        remote_src: yes
+        extra_opts:
+          - --strip-components=1
+
+    - name: Cleanup
+      file: path=/tmp/{{kafka_version}}.tgz state=absent
+
+  vars:
+    kafka_home: /opt/kafka
+    kafka_version: kafka_2.13-2.4.0
+    kafka_src_url: http://mirror.softaculous.com/apache/kafka/2.4.0/{{kafka_version}}.tgz
+    kafka_src_sha512: sha512:7C646401A098C9DFBB3C81158493F97193032F22EFB3FD1F8F8B729F17E8FA33003CC34D797F514451501359A717402DF1FA389813FC239EFC1B8929052925C7
+
+- name: Ensure zookeeper dir
+  file: path={{item}} state=directory
+  with_items:
+    - /etc/zookeeper
+    - /var/lib/zookeeper
+
+- name: Create zookeper config
+  template:
+    src: 'zookeeper.properties.j2'
+    dest: '/etc/zookeeper/zookeper.properties'
+    owner: root
+    group: root
+    mode: 0755
+  vars:
+    zookeeper_servers: '{{groups["kafkacluster"]}}'
+
+- name: Create zookeeper node id
+  copy:
+    content: '{{inventory_hostname[-1]}}'
+    dest: /var/lib/zookeeper/myid

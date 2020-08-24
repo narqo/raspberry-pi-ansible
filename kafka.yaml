@@ -1,45 +1,9 @@
 ---
 
-- hosts: kafka-nodes
-  tasks:
-    - name: Install, configure, start kafka
-      become: true
-      block:
-        - name: Install java
-          apt: name=default-jdk state=present
-
-        - name: Check if kafka installed
-          stat: path={{kafka_home}}
-          register: kafkadir
-
-        - name: Install kafka
-          block:
-            - name: Ensure dl dest dir
-              become: false
-              file: path={{ansible_user_dir}}/dl state=directory
-
-            - name: Download kafka
-              become: false
-              get_url:
-                url: '{{kafka_src_url}}'
-                dest: '{{ansible_user_dir}}/dl'
-                checksum: '{{kafka_src_sha512}}'
-
-            - name: Ensure {{kafka_home}}
-              file: path={{kafka_home}} state=directory
-
-            - name: Install kafka
-              unarchive:
-                src: '{{ansible_user_dir}}/dl/{{kafka_version}}.tgz'
-                dest: '{{kafka_home}}'
-                remote_src: yes
-                extra_opts:
-                  - --strip-components=1
-
-          when: kafkadir.stat.exists == false
-
-      vars:
-        kafka_home: /opt/kafka
-        kafka_version: kafka_2.13-2.4.0
-        kafka_src_url: http://mirror.softaculous.com/apache/kafka/2.4.0/{{kafka_version}}.tgz
-        kafka_src_sha512: sha512:7C646401A098C9DFBB3C81158493F97193032F22EFB3FD1F8F8B729F17E8FA33003CC34D797F514451501359A717402DF1FA389813FC239EFC1B8929052925C7
+- hosts: kafkacluster
+  become: yes
+  # pre_tasks:
+  #  - name: update apt cache
+  #    raw: 'apt-get update'
+  roles:
+    - { role: kafka }

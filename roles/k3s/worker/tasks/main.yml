@@ -1,0 +1,13 @@
+---
+
+- name: Restart k3s-agent
+  become: yes
+  service:
+    name: k3s-agent
+    state: restarted
+    enabled: yes
+
+- name: Wait for node becode ready
+  become: yes
+  shell: 'kubectl wait --for=condition=Ready node/{{ ansible_fqdn }}'
+  delegate_to: '{{ groups.pi_masters|first }}'

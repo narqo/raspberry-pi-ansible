@@ -1,0 +1,13 @@
+---
+
+- name: Restart k3s
+  become: yes
+  service:
+    name: k3s
+    state: restarted
+    enabled: yes
+
+- name: Wait for api-server port
+  wait_for:
+    port: 6443
+    delay: 5

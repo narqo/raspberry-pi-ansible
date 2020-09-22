@@ -1,0 +1,30 @@
+---
+
+- name: Ensure download dir
+  file:
+    path: '{{ ansible_user_dir }}/dl'
+    state: directory
+
+- name: Fetch k3s binary
+  get_url:
+    url: '{{ k3s_download_url }}/{{ item.binary }}'
+    checksum: 'sha256:{{ k3s_download_url }}/{{ item.checksum_file }}'
+    dest: '{{ ansible_user_dir }}/dl/k3s-{{ k3s_version }}'
+  when: ansible_facts.architecture == item.arch
+  loop:
+    - arch: armv7l
+      binary: k3s-armhf
+      checksum_file: sha256sum-arm.txt
+    - arch: aarch64
+      binary: k3s-arm64
+      checksum_file: sha256sum-arm64.txt
+
+- name: Update k3s binary
+  become: yes
+  copy:
+    src: '{{ ansible_user_dir }}/dl/k3s-{{ k3s_version }}'
+    dest: /usr/local/bin/k3s
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '0755'

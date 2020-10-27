@@ -1,6 +1,6 @@
 ---
 
-- hosts: pi_masters
+- hosts: pi_kube_masters
   serial: 1
   vars:
     k3s_version: v1.19.3+k3s1
@@ -8,7 +8,7 @@
     - k3s
     - k3s/master
 
-- hosts: pi_workers
+- hosts: pi_kube_workers
   serial: 1
   vars:
     k3s_version: v1.19.3+k3s1

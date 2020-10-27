@@ -1,15 +1,19 @@
+192.168.10.31 ansible_ssh_user=pi
 192.168.10.41 ansible_ssh_user=pi
 192.168.10.42 ansible_ssh_user=pi
 192.168.10.43 ansible_ssh_user=ubuntu
 192.168.10.44 ansible_ssh_user=pi
 
-[pi_masters]
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+[pi_dns]
+192.168.10.31
+
+[pi_kube_masters]
 192.168.10.41
 
-[pi_workers]
+[pi_kube_workers]
 192.168.10.42
 192.168.10.43
 192.168.10.44
-
-[kafkacluster:children]
-pi_workers

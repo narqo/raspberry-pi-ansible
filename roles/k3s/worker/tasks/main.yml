@@ -7,7 +7,8 @@
     state: restarted
     enabled: yes
 
-- name: Wait for node becode ready
+- name: Wait for node become ready
   become: yes
   shell: 'kubectl wait --for=condition=Ready node/{{ ansible_fqdn }}'
-  delegate_to: '{{ groups.pi_masters|first }}'
+  delegate_to: '{{ groups.pi_kube_masters|first }}'
+  ignore_errors: yes

@@ -1,12 +1,17 @@
+[rpi3]
 192.168.10.31 ansible_ssh_user=pi
+
+[rpi4]
 192.168.20.41 ansible_ssh_user=pi
 192.168.20.42 ansible_ssh_user=pi
 192.168.20.43 ansible_ssh_user=ubuntu
 192.168.20.44 ansible_ssh_user=pi
 
-[all:vars]
-ansible_python_interpreter=/usr/bin/python3
-ansible_ssh_common_args='-o StrictHostKeyChecking=no -o ProxyCommand="ssh -W %h:%p -q pi@192.168.10.31"'
+[rpi4:vars]
+ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q pi@192.168.10.31"'
+
+[gateway]
+192.168.10.31
 
 [pi_kube_masters]
 192.168.20.41

@@ -1,0 +1,11 @@
+---
+
+- name: Install dnsmasq
+  apt: name=dnsmasq state=latest
+
+- name: Ensure configs
+  copy:
+    src: dnsmasq.conf
+    dest: /etc/dnsmasq.conf
+    mode: 0644
+  notify: Restart dnsmasq

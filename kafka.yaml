@@ -1,9 +1,0 @@
----
-
-- hosts: kafkacluster
-  become: yes
-  # pre_tasks:
-  #  - name: update apt cache
-  #    raw: 'apt-get update'
-  roles:
-    - { role: kafka }

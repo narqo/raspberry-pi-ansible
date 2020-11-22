@@ -1,0 +1,14 @@
+---
+
+- name: Install iptables-persistent
+  apt: name=iptables-persistent state=present
+
+- name: Ensure netfilter-persistent enabled
+  service:
+    name: netfilter-persistent
+    enabled: yes
+
+- name: Setup IP Forwarding
+  copy:
+    src: local-routed-ap.conf
+    dest: /etc/sysctl.d/

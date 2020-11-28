@@ -2,7 +2,7 @@ pi-31 ansible_host=192.168.10.31 ansible_ssh_user=pi
 
 pi-41 ansible_host=192.168.20.41 ansible_ssh_user=pi
 pi-42 ansible_host=192.168.20.42 ansible_ssh_user=pi
-pi-43 ansible_host=192.168.20.43 ansible_ssh_user=ubuntu
+pi-43 ansible_host=192.168.20.43 ansible_ssh_user=pi
 pi-44 ansible_host=192.168.20.44 ansible_ssh_user=pi
 
 [rpi4]

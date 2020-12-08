@@ -24,3 +24,7 @@ pi-41
 pi-42
 pi-43
 pi-44
+
+[pi_kube:children]
+pi_kube_servers
+pi_kube_workers

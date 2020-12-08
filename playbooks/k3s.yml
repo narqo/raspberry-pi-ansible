@@ -1,17 +1,16 @@
 ---
+- hosts: pi_kube
+  vars:
+    k3s_version: v1.19.4+k3s2
+  roles:
+    - k3s
 
 - hosts: pi_kube_servers
   serial: 1
-  vars:
-    k3s_version: v1.19.4+k3s1
   roles:
-    - k3s
     - k3s/master
 
 - hosts: pi_kube_workers
   serial: 1
-  vars:
-    k3s_version: v1.19.4+k3s1
   roles:
-    - k3s
     - k3s/worker

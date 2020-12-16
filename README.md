@@ -42,3 +42,11 @@ default via 192.168.10.1 dev eth0 src 192.168.10.31 metric 202
 ```
 
 To delete the route, run `sudo ip r del 192.168.20.0/24`.
+
+## Ansible Playbook
+
+### k3s
+
+```
+$ ansible-playbook -i hosts --limit=pi_kube_servers -e k3s_version=v1.19.4+k3s2 playbooks/k3s.yml
+```

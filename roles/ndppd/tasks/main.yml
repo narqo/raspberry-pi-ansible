@@ -1,0 +1,11 @@
+---
+
+- name: Install ndppd
+  apt: name=ndppd state=latest
+
+- name: Ensure configs
+  copy:
+    src: ndppd.conf
+    dest: /etc/ndppd.conf
+    mode: 0644
+  notify: Restart ndppd

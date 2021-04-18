@@ -1,0 +1,8 @@
+---
+
+- name: Restart ndppd
+  become: yes
+  service:
+    name: ndppd.service
+    state: restarted
+    enabled: yes

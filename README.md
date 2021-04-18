@@ -3,16 +3,25 @@
 ## Network Topology
 
 ```
-ISP --> Router [192.168.10.1/24] --> pi-31 [192.168.10.31/24] Wi-Fi ))  (( Wi-Fi Router/Switch --> pi-41...pi-44
+ISP
+ |
+ -> Router [192.168.10.1/24] Wi-Fi )) (( pi-31 [192.168.10.31/24] Router/Switch
+                                          |
+                                          -> pi-41...pi-44 [192.168.20.[41..44]/24]
 ```
 
-- Router (`192.168.10.1/24`) provides internet via 5GHz Wi-Fi for our devices.
-- pi-31 is connected to the router via ethernet and provides an additional 2.4GHz access point for the Pi cluster.
-- Pi cluster connects to pi-31 via Wi-Fi switch (a old 2.4GHz router, that works in Wi-Fi client-mode). All Pis are
-  connected to the switch via ethernet.
-- Pi cluster lives in a separate network space `192.168.20.1/24`, provided by `wlan0` on pi-31.
+- Router (`192.168.10.1/24`) provides internet via 5GHz Wi-Fi for home devices.
+- `pi-31` connects to the router via Wi-Fi.
+- Pi cluster connects to `pi-31` though a network switch.
+- Pi cluster lives in a separate IPv4 network space `192.168.20.1/24` (using static IPs `192.168.20.41...192.168.20.44`) and configured to access the
+  Routers network via NAT.
+- Pi cluster lives in IPv6 sub-network, assigned by the ISP:
+  - the ISP provides `2001:db8:abc:1::/64`;
+  - Pi-nodes are assigned static IPv6 `2001:db8:abc:1:41::1...2001:db8:abc:1:44::1`;
+  - `ndppd` on `pi-31` proxies NDP (neighbor discovery protocol) from `2001:db8:abc:1:40::/76` on `wlan0` to `eth0`, allowing both Pi cluster to access
+    the IPv6 internet, and the devices on the home network to access the Pi cluster via IPv6 w/o the NAT.
 
-## Routing
+## Routing (IPv4)
 
 Commands below add a static route via gateway `pi-31` (`192.168.10.31/24`), allowing the host to connect to pi cluster
 (`192.168.20.0/24`) from the main router's network.
@@ -42,6 +51,10 @@ default via 192.168.10.1 dev eth0 src 192.168.10.31 metric 202
 ```
 
 To delete the route, run `sudo ip r del 192.168.20.0/24`.
+
+## Routing (IPv6)
+
+Thanks to the fact, that each Pi has a globally routable address and the NDP proxying, the cluster is accessible w/o NAT or additional routing.
 
 ## Ansible Playbook
 

@@ -8,7 +8,7 @@
     name: netfilter-persistent
     enabled: yes
 
-- name: Setup IP Forwarding
+- name: Setup IP forwarding
   copy:
-    src: local-routed-ap.conf
+    src: local-router.conf
     dest: /etc/sysctl.d/

@@ -56,6 +56,14 @@ To delete the route, run `sudo ip r del 192.168.20.0/24`.
 
 ## Routing (IPv6)
 
+Add Pi cluster's IPv6 subnet to the routing table on pi-31:
+
+```
+$ sudo ip r add 2001:db8:abc:1:40::/76 dev eth0 metric 100
+```
+
+Above, `metric 100` is required to make sure the route had a bigger priority than the `/64` route set from the router.
+
 Thanks to the fact, that each Pi has a globally routable address and the NDP proxying, the cluster is accessible w/o NAT or additional routing.
 
 ## Ansible Playbook

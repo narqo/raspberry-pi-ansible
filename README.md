@@ -4,10 +4,11 @@
 
 ```
 ISP
- |
- -> Router [192.168.10.1/24] Wi-Fi )) (( pi-31 [192.168.10.31/24] Router/Switch
-                                          |
-                                          -> pi-41...pi-44 [192.168.20.[41..44]/24]
+ ↳ Router [192.168.10.1/24] Wi-Fi ~)) ((~ pi-31 [192.168.10.31/24]
+                                            🡙
+                                          Switch
+                                            🡙
+                                      pi-41...pi-44 [192.168.20.41..44/24]
 ```
 
 - Router (`192.168.10.1/24`) provides internet via 5GHz Wi-Fi for home devices.
@@ -18,8 +19,9 @@ ISP
 - Pi cluster lives in IPv6 sub-network, assigned by the ISP:
   - the ISP provides `2001:db8:abc:1::/64`;
   - Pi-nodes are assigned static IPv6 `2001:db8:abc:1:41::1...2001:db8:abc:1:44::1`;
-  - `ndppd` on `pi-31` proxies NDP (neighbor discovery protocol) from `2001:db8:abc:1:40::/76` on `wlan0` to `eth0`, allowing both Pi cluster to access
+  - `ndppd` on `pi-31` proxies NDP (neighbour discovery protocol) from `2001:db8:abc:1:40::/76` on `wlan0` to `eth0`, allowing both Pi cluster to access
     the IPv6 internet, and the devices on the home network to access the Pi cluster via IPv6 w/o the NAT.
+- `avahi-daemon` on `pi-31` is set to reflect incoming mDNS requests to all local networks (`wlan0` and `eth0`), allowing home devices to discover the nodes of Pi cluster under `.local` domain.
 
 ## Routing (IPv4)
 

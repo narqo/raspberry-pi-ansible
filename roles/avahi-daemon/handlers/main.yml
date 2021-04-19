@@ -1,0 +1,8 @@
+---
+
+- name: Restart avahi-daemon
+  become: yes
+  service:
+    name: avahi-daemon.service
+    state: restarted
+    enabled: yes

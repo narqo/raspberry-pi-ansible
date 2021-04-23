@@ -3,9 +3,17 @@
 - name: Install dnsmasq
   apt: name=dnsmasq state=latest
 
-- name: Ensure configs
+- name: Ensure conf.d
+  file:
+    path: /etc/dnsmasq.d
+    state: directory
+
+- name: Copy configs
   copy:
-    src: dnsmasq.conf
-    dest: /etc/dnsmasq.conf
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
     mode: 0644
+  loop:
+    - { src: dnsmasq.conf, dest: /etc/dnsmasq.conf }
+    - { src: 10-k8s-pi.home, dest: /etc/dnsmasq.d/ }
   notify: Restart dnsmasq

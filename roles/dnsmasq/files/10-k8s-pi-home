@@ -1,0 +1,2 @@
+# Resolve *.k8s.pi.home with the IP of pi-31.
+address=/k8s.pi.home/192.168.10.31

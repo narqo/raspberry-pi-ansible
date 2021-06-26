@@ -15,5 +15,5 @@
     mode: 0644
   loop:
     - { src: dnsmasq.conf, dest: /etc/dnsmasq.conf }
-    - { src: 10-k8s-pi.home, dest: /etc/dnsmasq.d/ }
+    - { src: 10-k8s-pi-home, dest: /etc/dnsmasq.d/ }
   notify: Restart dnsmasq

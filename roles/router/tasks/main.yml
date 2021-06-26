@@ -1,7 +1,9 @@
 ---
 
 - name: Install iptables-persistent
-  apt: name=iptables-persistent state=present
+  apt:
+    name: iptables-persistent
+    state: present
 
 - name: Ensure netfilter-persistent enabled
   service:
@@ -12,3 +14,8 @@
   copy:
     src: local-router.conf
     dest: /etc/sysctl.d/
+
+- name: Setup routing
+  copy:
+    src: dhcpcd.exit-hook
+    dest: /etc/

@@ -1,7 +1,7 @@
 - hosts: gateway
   become: yes
   roles:
+    - router
     - avahi-daemon
     - dnsmasq
     - ndppd
-    - router

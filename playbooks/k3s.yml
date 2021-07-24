@@ -1,7 +1,7 @@
 ---
 - hosts: pi_kube
   vars:
-    k3s_version: v1.21.2+k3s1
+    k3s_version: v1.21.3+k3s1
   roles:
     - k3s
 

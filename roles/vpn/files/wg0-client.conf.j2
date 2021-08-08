@@ -1,0 +1,10 @@
+[Interface]
+Address = 192.168.2.2
+MTU = 1280
+PrivateKey = {{ wg_client_key }}
+
+[Peer]
+PublicKey = {{ wg_server_pub_key }}
+Endpoint = ec2-XXX-XXX-XXX-XXX.eu-central-1.compute.amazonaws.com:51820
+AllowedIPs = 192.168.2.0/24
+PersistentKeepalive = 25

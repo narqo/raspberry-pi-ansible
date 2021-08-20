@@ -1,9 +1,9 @@
 pi-31 ansible_host=pi-31.local ansible_ssh_user=pi
 
-pi-41 ansible_host=pi-41.local ansible_ssh_user=pi
-pi-42 ansible_host=pi-42.local ansible_ssh_user=pi
-pi-43 ansible_host=pi-43.local ansible_ssh_user=pi
-pi-44 ansible_host=pi-44.local ansible_ssh_user=pi
+pi-41 ansible_host=pi-41.home ansible_ssh_user=pi
+pi-42 ansible_host=pi-42.home ansible_ssh_user=pi
+pi-43 ansible_host=pi-43.home ansible_ssh_user=pi
+pi-44 ansible_host=pi-44.home ansible_ssh_user=pi
 
 [rpi4]
 pi-41

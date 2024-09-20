@@ -19,7 +19,7 @@ pi-43
 
 [pi_kube_workers]
 pi-41
-pi-42
+#pi-42
 #pi-44
 
 [pi_kube:children]

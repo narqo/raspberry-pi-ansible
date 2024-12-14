@@ -6,19 +6,19 @@ pi-43 ansible_host=192.168.20.43 ansible_ssh_user=pi
 pi-44 ansible_host=192.168.20.44 ansible_ssh_user=pi
 
 [rpi4]
-pi-41
+#pi-41
 pi-42
-pi-43
+#pi-43
 #pi-44
 
 #[gateway]
 #pi-31
 
 [pi_kube_servers]
-pi-43
+pi-42
 
 [pi_kube_workers]
-pi-41
+#pi-41
 #pi-42
 #pi-44
 
